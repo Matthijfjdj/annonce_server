@@ -25,3 +25,11 @@ def receive_annonce():
         json.dump(annonces, f, ensure_ascii=False, indent=2)
 
     return jsonify({"status": "ok", "nb_total": len(annonces)})
+@app.route("/voir", methods=["GET"])
+def voir_annonces():
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return {"error": str(e)}, 500
